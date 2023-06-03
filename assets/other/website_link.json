@@ -1,0 +1,34 @@
+{
+    "website": [
+        {
+            "id": 1,
+            "webIcon":"perpus_undip",
+            "webTitle": "Perpustakaan Undip",
+            "link_web": "https://digilib.undip.ac.id/"
+        },
+        {
+            "id": 2,
+            "webIcon":"perpus_ft",
+            "webTitle": "Perpustakaan FT Undip",
+            "link_web": "http://perpus.ft.undip.ac.id/"
+        },
+        {
+            "id": 3,
+            "webIcon":"teknik_komputer",
+            "webTitle": "Teknik Komputer",
+            "link_web": "https://tekkom.ft.undip.ac.id/"
+        },
+        {
+            "id": 4,
+            "webIcon":"capstone",
+            "webTitle": "Capstone Tekkom",
+            "link_web": "https://capstone-ta.ce.undip.ac.id/"
+        },
+        {
+            "id": 5,
+            "webIcon":"rbc_web",
+            "webTitle": "RBC",
+            "link_web": "https://blogmni.xyz"
+        }
+    ]
+}
