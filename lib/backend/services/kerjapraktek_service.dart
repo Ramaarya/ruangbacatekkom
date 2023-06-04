@@ -39,6 +39,19 @@ class KerjaPraktekService {
       final searchDataSkripsi =
           await http.get(Uri.parse("https://ibrangoding.my.id/api/kp?q=$word"));
       if (searchDataSkripsi.statusCode == 200) {
+        // ini list nya sengaja ditambahin buat ngakalin kalau ga nemu query
+        // developernya dah pusing mikirin caranya gimana. masih cupu soalnya
+        listKp.add(KerjaPraktek(
+          idKp: 0,
+          name: '0',
+          nim: '0',
+          tahun: 0,
+          judul: '0',
+          abstrak: '0',
+          fileUrl: '0',
+          namaBidang: '0',
+          dosen: '0',
+        ));
         var jsonBody = json.decode(searchDataSkripsi.body)['data']['data'];
         for (var datas in jsonBody) {
           listKp.add(KerjaPraktek(
@@ -53,6 +66,20 @@ class KerjaPraktekService {
             dosen: datas['dosen']['nama_dosen'],
           ));
         }
+        return listKp;
+      } else {
+        // ini juga buat ngakalin, selamat berjuang kalau mau melanjutkan ini app
+        listKp.add(KerjaPraktek(
+          idKp: 0,
+          name: '0',
+          nim: '0',
+          tahun: 0,
+          judul: '0',
+          abstrak: '0',
+          fileUrl: '0',
+          namaBidang: '0',
+          dosen: '0',
+        ));
         return listKp;
       }
     } catch (e) {

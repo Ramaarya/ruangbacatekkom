@@ -138,43 +138,51 @@ class _SkripsiPageState extends State<SkripsiPage> {
 
   Widget verifiedWidget(List<Skripsi> listSkripsi, double heightScreen) {
     if (listSkripsi.isNotEmpty) {
-      return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: listSkripsi.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return DetailData(
-                  judul: listSkripsi[index].judul,
-                  mahasiswa: listSkripsi[index].name,
-                  pembimbing: listSkripsi[index].dosen1,
-                  tahun: listSkripsi[index].tahun,
-                  bidang: listSkripsi[index].namaBidang,
-                  koleksi: 'Skripsi',
-                  abstrak: listSkripsi[index].abstrak,
-                  file: listSkripsi[index].fileUrl,
-                  skripsi: true,
-                );
-              }));
-            },
-            child: ListCard(
-              judul: listSkripsi[index].judul,
-              mahasiswa: listSkripsi[index].name,
-              nim: listSkripsi[index].nim,
-              tahun: listSkripsi[index].tahun,
-              bidang: listSkripsi[index].namaBidang,
-              logo: 'assets/icons/skripsi.png',
+      if (listSkripsi.length == 1) {
+        return SizedBox(
+          height: heightScreen * 4 / 5 - 100,
+          child: const Center(
+            child: Text(
+              'Data tidak ditemukan',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-          );
-        },
-      );
-    } else if (listSkripsi.isEmpty) {
-      return SizedBox(
-        height: heightScreen * 3 / 5,
-        child: const Center(child: Text('Kosong Kocak')),
-      );
+          ),
+        );
+      } else {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: listSkripsi.length - 1,
+          itemBuilder: (context, indexs) {
+            int index = indexs + 1;
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DetailData(
+                    judul: listSkripsi[index].judul,
+                    mahasiswa: listSkripsi[index].name,
+                    pembimbing: listSkripsi[index].dosen1,
+                    tahun: listSkripsi[index].tahun,
+                    bidang: listSkripsi[index].namaBidang,
+                    koleksi: 'Skripsi',
+                    abstrak: listSkripsi[index].abstrak,
+                    file: listSkripsi[index].fileUrl,
+                    skripsi: true,
+                  );
+                }));
+              },
+              child: ListCard(
+                judul: listSkripsi[index].judul,
+                mahasiswa: listSkripsi[index].name,
+                nim: listSkripsi[index].nim,
+                tahun: listSkripsi[index].tahun,
+                bidang: listSkripsi[index].namaBidang,
+                logo: 'assets/icons/skripsi.png',
+              ),
+            );
+          },
+        );
+      }
     } else {
       return SizedBox(
         height: heightScreen * 3 / 5,

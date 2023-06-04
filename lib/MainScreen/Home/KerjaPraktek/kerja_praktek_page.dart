@@ -78,50 +78,69 @@ class _KerjaPraktekPageState extends State<KerjaPraktekPage> {
                 },
               ),
             ),
-            listKp.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: listKp.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return DetailData(
-                              judul: listKp[index].judul,
-                              mahasiswa: listKp[index].name,
-                              pembimbing: listKp[index].dosen,
-                              tahun: listKp[index].tahun,
-                              bidang: listKp[index].namaBidang,
-                              koleksi: 'Skripsi',
-                              abstrak: listKp[index].abstrak,
-                              file: listKp[index].fileUrl,
-                              skripsi: false,
-                            );
-                          }));
-                        },
-                        child: ListCard(
-                          judul: listKp[index].judul,
-                          mahasiswa: listKp[index].name,
-                          nim: listKp[index].nim,
-                          tahun: listKp[index].tahun,
-                          bidang: listKp[index].namaBidang,
-                          logo: 'assets/icons/coding.png',
-                        ),
-                      );
-                    },
-                  )
-                : SizedBox(
-                    height: heightScreen * 3 / 5,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xff4EA8DE),
-                      ),
-                    ),
-                  )
+            verifiedWidget(listKp, heightScreen)
           ],
         ),
       ),
     );
+  }
+
+  Widget verifiedWidget(List<KerjaPraktek> listKP, double heightScreen) {
+    if (listKp.isNotEmpty) {
+      if (listKp.length == 1) {
+        return SizedBox(
+          height: heightScreen * 4 / 5 - 100,
+          child: const Center(
+            child: Text(
+              'Data tidak ditemukan',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+      } else {
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: listKp.length - 1,
+          itemBuilder: (context, indexs) {
+            int index = indexs + 1;
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DetailData(
+                    judul: listKp[index].judul,
+                    mahasiswa: listKp[index].name,
+                    pembimbing: listKp[index].dosen,
+                    tahun: listKp[index].tahun,
+                    bidang: listKp[index].namaBidang,
+                    koleksi: 'Skripsi',
+                    abstrak: listKp[index].abstrak,
+                    file: listKp[index].fileUrl,
+                    skripsi: true,
+                  );
+                }));
+              },
+              child: ListCard(
+                judul: listKp[index].judul,
+                mahasiswa: listKp[index].name,
+                nim: listKp[index].nim,
+                tahun: listKp[index].tahun,
+                bidang: listKp[index].namaBidang,
+                logo: 'assets/icons/skripsi.png',
+              ),
+            );
+          },
+        );
+      }
+    } else {
+      return SizedBox(
+        height: heightScreen * 3 / 5,
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xff4EA8DE),
+          ),
+        ),
+      );
+    }
   }
 }
